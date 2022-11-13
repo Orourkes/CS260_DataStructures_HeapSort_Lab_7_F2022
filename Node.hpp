@@ -11,11 +11,7 @@ private:
 
 public:
 	Node();
-	Node(string value);
-	
-//protected:
-
-
+	Node(int value);
 	~Node() {}
 
 	int getValue() { return storedVal; }

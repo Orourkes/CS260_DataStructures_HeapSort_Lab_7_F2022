@@ -2,37 +2,51 @@
 
 Heap::Heap()
 {
-	heapArray = new int[heapSize];
+	heapArray = new Node * [heapSize];
 	Root = nullptr;
 	usedElements = 0;
 }
 Heap::Heap(int newSize)
 {
 	heapSize = newSize;
-	heapArray = new int[heapSize];
+	heapArray = new Node* [heapSize];
 	Root = nullptr;
 	usedElements = 0;
 }
 Heap::~Heap()
 {
-	delete heapArray;
+	recDelete(Root);
 }
 
 void Heap::addItem(int addValue)
 {
 	usedElements++;
-	if (Root = nullptr)
+	if (Root == nullptr)
 	{
-		Root->setValue(addValue);
+		Root = new Node(addValue);
 		heapArray[0] = Root;
+		//Root->setValue(addValue);
 	}
 	else
 	{
-		heapArray[(usedElements - 1)] = addValue;
+		addChild(addValue);
 	}
 		
 }
 int Heap::getItem()
 {
-	return heapArray[0];
+	return heapArray[0]->getValue();
+}
+void Heap::addChild(int addValue)
+{
+	return;
+}
+void Heap::recDelete(Node* ptr)
+{
+	if (ptr != nullptr)
+	{
+		recDelete(ptr->getLeft());
+		recDelete(ptr->getRight());
+		delete ptr;
+	}
 }

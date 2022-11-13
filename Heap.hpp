@@ -14,10 +14,12 @@ class Heap
 {
 private:
 	Node* Root;
-	int* heapArray;
+	Node** heapArray;
 	void resizeDouble();
 	int heapSize = 10;
 	int usedElements;
+
+	void addChild(int);
 
 public:
 	Heap();
@@ -26,6 +28,7 @@ public:
 
 	void addItem(int);
 	int getItem();
+	void recDelete(Node*);
 
 };
 
