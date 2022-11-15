@@ -9,6 +9,8 @@
 * 
 ********************/
 #include "Node.hpp"
+#include <string>
+
 
 class Heap
 {
@@ -17,9 +19,12 @@ private:
 	Node** heapArray;
 	void resizeDouble();
 	int heapSize = 10;
-	int usedElements;
+	int totalElements;
+	int sortedElements;
 
 	void addChild(int);
+	void removeChild();
+	void setSize(int newSize) { heapSize = newSize; }
 
 public:
 	Heap();
@@ -29,6 +34,12 @@ public:
 	void addItem(int);
 	int getItem();
 	void recDelete(Node*);
+	Node* trickleUp(Node*);
+	void bubbleDown(Node*);
+	void bubbleUp(Node*);
 
+	std::string printAll();
+	void resize(int newSize);
+	void resize();
 };
 

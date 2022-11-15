@@ -3,7 +3,7 @@
 
 Node::Node()
 {
-	storedVal = '0';
+	storedVal = 0;
 	rightChild = nullptr;
 	leftChild = nullptr;
 }

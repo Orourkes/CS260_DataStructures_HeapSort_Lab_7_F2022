@@ -45,15 +45,18 @@ int main()
     int heapVals[NUM_VALUES] = { 10, 5, 30, 15, 20, 40, 60, 25, 50, 35, 45, 65, 70, 75, 55, -1, 0 };
 
     cout << "Creating heap of default size (10)" << endl;
-    Heap pile(20); //cheat please remove.
+    Heap pile;
 
     // load the heap with values
     cout << "Now filling it with 17 values, should cause doubling of size" << endl << endl;
     for (int i = 0; i < NUM_VALUES; i++)
+    {
         pile.addItem(heapVals[i]);
-    for (int i = 0; i < NUM_VALUES; i++)
-        cout << pile.getItem() << " ";
+        cout << heapVals[i] << " ";
+    }
     cout << endl << endl;
+    cout << "New Heap array contains: " << endl;
+    cout << pile.printAll() << endl;
 
     // remove values, should be in ascending order
     cout << "Now removing values to see if properly ordered" << endl;

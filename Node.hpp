@@ -26,4 +26,6 @@ public:
 
 	void setRight(Node* newRight) { rightChild = newRight; }
 
+	//void setLocation(int elemLoc) { location = elemLoc; }
+
 };
