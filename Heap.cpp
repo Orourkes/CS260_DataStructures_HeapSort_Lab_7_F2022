@@ -1,5 +1,6 @@
 #include "Heap.hpp"
 #include <iomanip>
+#include <iostream>
 #include <stdexcept>
 
 Heap::Heap()
@@ -43,11 +44,12 @@ void Heap::addItem(int addValue)
 }
 int Heap::getItem()
 {
-	removeRoot();
+	if(!isSorted)
+		removeRoot();
 	if (heapArray[totalElements] != nullptr)
 		return heapArray[totalElements++]->getValue();
-	else
-		throw std::out_of_range("Index Error");
+	//else
+	//	throw std::out_of_range("Index Error");
 	return 0;
 }
 void Heap::addChild(int addValue)
@@ -73,25 +75,33 @@ void Heap::removeRoot()
 { 
 	if (Root != nullptr)
 	{
-		if((totalElements > 0) && (heapArray[totalElements--] != nullptr))
+		if((totalElements > 0) && (heapArray[(totalElements--)] != nullptr))
 		{
 			int rmRoot = Root->getValue();
 			Root->setValue(heapArray[totalElements]->getValue());
-			
-			int parent = getParent(totalElements);
-			heapArray[totalElements]->setValue(rmRoot);
-			if (heapArray[parent]->getLeft() == heapArray[totalElements])
+			if (totalElements > 0)
 			{
-				heapArray[parent]->setLeft(nullptr);
-				totalElements--;
-			}
-			else if(heapArray[parent]->getRight() == heapArray[totalElements])
-			{
-				heapArray[parent]->setRight(nullptr);
-				totalElements--;
+				int parent = getParent(totalElements);
+				heapArray[totalElements]->setValue(rmRoot);
+				if (heapArray[parent]->getLeft() == heapArray[totalElements])
+				{
+					std::cout << "removing node " << heapArray[parent]->getLeft()->getValue() << endl;
+					heapArray[parent]->setLeft(nullptr);
+					//totalElements--;
+				}
+				else if (heapArray[parent]->getRight() == heapArray[totalElements])
+				{
+					std::cout << "removing node " << heapArray[parent]->getRight()->getValue() << endl;
+					heapArray[parent]->setRight(nullptr);
+					//totalElements--;
+				}
 			}
 			else
-				throw std::out_of_range("Index Error");
+			{
+				isSorted = true;
+				return;
+			}
+				//throw std::out_of_range("Index Error");
 		}
 		trickleDown(Root);
 		if(totalElements != 0)
@@ -176,8 +186,8 @@ void Heap::trickleDown(Node* root)
 		}
 		else if (nullptr != root->getLeft())
 		{
-			if (root->getLeft()->getValue() > root->getRight()->getValue())
-			{
+//			if (root->getLeft()->getValue() > root->getRight()->getValue())
+//			{
 				if (root->getLeft()->getValue() > root->getValue())
 				{
 					int smaller = root->getValue();
@@ -186,7 +196,7 @@ void Heap::trickleDown(Node* root)
 					trickleDown(root->getLeft());
 					return;
 				}
-			}
+//			}
 		}
 		else if (nullptr != root->getRight())
 		{
