@@ -24,7 +24,7 @@ private:
 	bool isSorted;
 
 	void addChild(int);
-	void removeChild(int);
+	void removeRoot();
 	void setSize(int newSize) { heapSize = newSize; }
 
 public:
@@ -34,11 +34,13 @@ public:
 
 	void addItem(int);
 	int getItem();
-	int getElement(Node*);
+	//int getElement(Node*);
 	void recDelete(Node*);
-	void trickleUp(Node*);
-	void bubbleDown(Node*);
-	void bubbleUp(Node*);
+	void trickleDown(Node*);
+	int getParent(int);
+	void bubbleUp(int);
+	int swap(int);
+
 
 	std::string printAll();
 	void resize(int newSize);
