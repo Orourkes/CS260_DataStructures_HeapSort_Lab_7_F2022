@@ -46,10 +46,9 @@ int Heap::getItem()
 {
 	if(!isSorted)
 		removeRoot();
-	if (heapArray[totalElements] != nullptr)
+	if (totalElements != countedElements)
 		return heapArray[totalElements++]->getValue();
-	//else
-	//	throw std::out_of_range("Index Error");
+	throw std::out_of_range("Index Error");
 	return 0;
 }
 void Heap::addChild(int addValue)
@@ -68,7 +67,7 @@ void Heap::addChild(int addValue)
 		bubbleUp(totalElements);
 	}
 	totalElements++;
-
+	countedElements = totalElements;
 	return;
 }
 void Heap::removeRoot()
