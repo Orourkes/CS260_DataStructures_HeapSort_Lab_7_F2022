@@ -7,7 +7,8 @@ Heap::Heap()
 	heapArray = new Node * [heapSize];
 	Root = nullptr;
 	totalElements = 0;
-	sortedElements = 0;
+	countedElements = 0;
+	isSorted = false;
 }
 Heap::Heap(int newSize)
 {
@@ -15,7 +16,8 @@ Heap::Heap(int newSize)
 	heapArray = new Node* [heapSize];
 	Root = nullptr;
 	totalElements = 0;
-	sortedElements = 0;
+	countedElements = 0;
+	isSorted = false;
 }
 Heap::~Heap()
 {
@@ -41,43 +43,24 @@ void Heap::addItem(int addValue)
 }
 int Heap::getItem()
 {
-//	if (Root != nullptr)
-//	{
-//		if ((sortedElements == totalElements) && (totalElements != 0))
-//		{
-//			sortedElements--;
-//			int retVal = heapArray[0]->getValue();
-//			//if (retVal > heapArray[((totalElements - 1))])
-//			//if ((heapArray[0]->getRight() != nullptr) || heapArray[0]->getLeft() != nullptr)
-//			//{
-//			//}
-//
-//		}
-//
-//		int retVal = heapArray[0]->getValue();
-//		
-//		{
-//			heapArray[0]->setValue(heapArray[((totalElements - 1) - sortedElements)]->getValue());
-//			heapArray[((totalElements - 1) - sortedElements)]->setValue(retVal);
-//			sortedElements ++;
-//		}
-//		if (Root->getRight() != nullptr)
-//		{
-//			Root = trickleUp(Root);
-//			heapArray[0] = Root;
-//		}
-//			if(Root->getLeft() != nullptr)
-//		{
-//			Root = trickleUp(Root);
-//			heapArray[0] = Root;
-//		}
-//		totalElements--;
-//		return retVal;
-//
-//	throw std::out_of_range("Index Error");
+	if (Root != nullptr)
+	{
+		if (!isSorted)
+			bubbleUp(Root);
+
+		if ((isSorted) && (totalElements != 0))
+		{
+			countedElements++;
+			return heapArray[(countedElements -1)]->getValue();
+			
+		}
+
+
+	}
+	//throw std::out_of_range("Index Error");
 	return 0;
 }
-	void Heap::addChild(int addValue)
+void Heap::addChild(int addValue)
  {
 	heapArray[(totalElements)] = new Node(addValue);
 	if (totalElements != 0)
@@ -90,28 +73,28 @@ int Heap::getItem()
 		{	//is right child of (totalElements-2)/2.
 			heapArray[((totalElements -2) / 2)]->setRight(heapArray[(totalElements)]);
 		}
-		bubbleUp(Root);
+		trickleUp(Root);
 	}
 	totalElements++;
 
 	return;
 }
-void Heap::removeChild()
-{
-	//heapArray[(totalElements)] = new Node(addValue);
+void Heap::removeChild(int removeMe)
+{ //Remove links to this child. Leave value in array.
 	if (totalElements != 0)
 	{
-		if ((totalElements % 2) == 1)
+		int lastPlace = totalElements - countedElements;
+		if ((lastPlace % 2) == 1)
 		{	//is left child of totalElements/2.
-			heapArray[(totalElements / 2)]->setLeft(nullptr);
+			heapArray[((totalElements -1) / 2)]->setLeft(nullptr);
 		}
 		else
 		{	//is right child of (totalElements-2)/2.
 			heapArray[((totalElements - 2) / 2)]->setRight(nullptr);
 		}
-		bubbleUp(Root);
+	//	bubbleUp(Root);
 	}
-	totalElements++;
+	//totalElements--;
 
 	return;
 }
@@ -124,34 +107,69 @@ void Heap::recDelete(Node* ptr)
 		delete ptr;
 	}
 }
-Node* Heap::trickleUp(Node* currentNode)
+void Heap::bubbleUp(Node* Parent)
 {
-	int saveVal = currentNode->getValue();
-	if (totalElements != 0)
+	int saveVal = Parent->getValue();
 	{
-		if ((totalElements % 2) == 1)
-		{	//is left child of totalElements/2.
-			heapArray[(totalElements / 2)]->setLeft(heapArray[(totalElements)]);
+		countedElements++; //must be at least one for next line.
+
+		Parent->setValue(heapArray[totalElements - countedElements]->getValue());
+		heapArray[totalElements - countedElements]->setValue(saveVal);
+		removeChild(totalElements - countedElements);
+		int holdVal = Parent->getValue();
+		if (nullptr != Parent->getLeft() && nullptr != Parent->getRight())
+		{
+ 			if (holdVal < Parent->getLeft()->getValue()) //hold less than
+			{
+				if (Parent->getLeft()->getValue() > Parent->getRight()->getValue())
+				{
+					bubbleUp(Parent->getLeft());
+				}
+				else
+					bubbleUp(Parent->getRight());
+			}
 		}
 		else
-		{	//is right child of (totalElements-2)/2.
-			heapArray[((totalElements - 2) / 2)]->setRight(heapArray[(totalElements)]);
+		{
+			if (nullptr != Parent->getLeft())
+			{
+				bubbleUp(Parent->getLeft());
+				if (holdVal < Parent->getLeft()->getValue())
+				{
+					Parent->setValue(Parent->getLeft()->getValue());
+					Parent->getLeft()->setValue(holdVal);
+				}
+			}
+			if (nullptr != Parent->getRight())
+			{
+				bubbleUp(Parent->getRight());
+				if (holdVal < Parent->getRight()->getValue())
+				{
+					Parent->setValue(Parent->getRight()->getValue());
+					Parent->getRight()->setValue(holdVal);
+				}
+			}
 		}
-		bubbleUp(Root);
+		if (countedElements == totalElements)
+		{
+			isSorted = true;
+			countedElements = 0;
+		}
+		if (!isSorted)
+			trickleUp(Parent);
 	}
-	return Root;
 }
 
 void Heap::bubbleDown(Node* currentNode)
 {
 }
 
-void Heap::bubbleUp(Node* parent)
+void Heap::trickleUp(Node* parent)
 {
 	int holdVal = parent->getValue();
 	if (nullptr != parent->getLeft())
 	{
-		bubbleUp(parent->getLeft());
+		trickleUp(parent->getLeft());
 		if (holdVal < parent->getLeft()->getValue())
 		{
 			parent->setValue(parent->getLeft()->getValue());
@@ -160,13 +178,22 @@ void Heap::bubbleUp(Node* parent)
 	}
 	if (nullptr != parent->getRight())
 	{
-		bubbleUp(parent->getRight());
+		trickleUp(parent->getRight());
 		if (holdVal < parent->getRight()->getValue())
 		{
 			parent->setValue(parent->getRight()->getValue());
 			parent->getRight()->setValue(holdVal);
 		}
 	}
+	//if ((nullptr != parent->getRight()) && (nullptr != parent->getLeft()))
+	//{
+	//	if (parent->getLeft()->getValue() < parent->getRight()->getValue())
+	//	{
+	//		int swapVal = parent->getLeft()->getValue();
+	//		parent->getLeft()->setValue(parent->getRight()->getValue());
+	//		parent->getRight()->setValue(swapVal);
+	//	}
+	//}
 
 }
 

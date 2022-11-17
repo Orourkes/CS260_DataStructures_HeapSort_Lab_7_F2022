@@ -20,10 +20,11 @@ private:
 	void resizeDouble();
 	int heapSize = 10;
 	int totalElements;
-	int sortedElements;
+	int countedElements;
+	bool isSorted;
 
 	void addChild(int);
-	void removeChild();
+	void removeChild(int);
 	void setSize(int newSize) { heapSize = newSize; }
 
 public:
@@ -33,8 +34,9 @@ public:
 
 	void addItem(int);
 	int getItem();
+	int getElement(Node*);
 	void recDelete(Node*);
-	Node* trickleUp(Node*);
+	void trickleUp(Node*);
 	void bubbleDown(Node*);
 	void bubbleUp(Node*);
 
