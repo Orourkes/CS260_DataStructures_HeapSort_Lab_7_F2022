@@ -1,5 +1,8 @@
 #pragma once
-class PriorityQ
+#include "Heap.hpp"
+
+class PriorityQ : public Heap
 {
+
 };
 

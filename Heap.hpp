@@ -41,7 +41,6 @@ public:
 	void bubbleUp(int);
 	int swap(int);
 
-
 	std::string printAll();
 	void resize(int newSize);
 	void resize();

@@ -11,10 +11,10 @@
 
 // TESTHEAP and TESTPRIORITYQ are Base Lab
 #define TESTHEAP
-//#define TESTPRIORITYQ
+#define TESTPRIORITYQ
 
 // TESTHEAPSORT, TESTMERGESORT, TESTQUICKSORT are Advanced Lab
-//#define TESTHEAPSORT
+#define TESTHEAPSORT
 //#define TESTMERGESORT
 //#define TESTQUICKSORT
 
@@ -29,9 +29,9 @@
 #include "PriorityQ.hpp"
 #endif
 
-#if defined TESTHEAPSORT || defined TESTMERGESORT || defined TESTQUICKSORT
+//#if defined TESTHEAPSORT || defined TESTMERGESORT || defined TESTQUICKSORT
 #include "recSorts.hpp"
-#endif
+//#endif
 
 using std::cout;
 using std::endl;
@@ -62,7 +62,7 @@ int main()
     cout << "Now removing values to see if properly ordered" << endl;
     cout << " In order s/b: -1 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75" << endl;
     cout << " Actual order: ";
-    //for (int i = 0; i < NUM_VALUES; i++)
+    for (int i = 0; i < NUM_VALUES; i++)
         cout << pile.getItem() << " ";
         cout << "New Heap array contains: " << endl;
         cout << pile.printAll() << endl;

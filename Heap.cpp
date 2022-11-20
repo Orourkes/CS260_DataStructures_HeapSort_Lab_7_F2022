@@ -248,4 +248,3 @@ void Heap::resize()
 {
 	resize(heapSize * 2);
 }
-
