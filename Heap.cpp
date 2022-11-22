@@ -84,13 +84,13 @@ void Heap::removeRoot()
 				heapArray[totalElements]->setValue(rmRoot);
 				if (heapArray[parent]->getLeft() == heapArray[totalElements])
 				{
-					std::cout << "removing node " << heapArray[parent]->getLeft()->getValue() << endl;
+					//std::cout << "removing node " << heapArray[parent]->getLeft()->getValue() << endl;
 					heapArray[parent]->setLeft(nullptr);
 					//totalElements--;
 				}
 				else if (heapArray[parent]->getRight() == heapArray[totalElements])
 				{
-					std::cout << "removing node " << heapArray[parent]->getRight()->getValue() << endl;
+					//std::cout << "removing node " << heapArray[parent]->getRight()->getValue() << endl;
 					heapArray[parent]->setRight(nullptr);
 					//totalElements--;
 				}
@@ -110,12 +110,12 @@ void Heap::removeRoot()
 }
 void Heap::recDelete(Node* ptr)
 {
-//	if (ptr != nullptr)
-//	{
-//		recDelete(ptr->getLeft());
-//		recDelete(ptr->getRight());
-//		delete ptr;
-//	}
+	if (ptr != nullptr)
+	{
+		recDelete(ptr->getLeft());
+		recDelete(ptr->getRight());
+		delete ptr;
+	}
 }
 
 void Heap::bubbleUp(int kid)

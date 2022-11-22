@@ -15,11 +15,12 @@
 
 // TESTHEAPSORT, TESTMERGESORT, TESTQUICKSORT are Advanced Lab
 #define TESTHEAPSORT
-//#define TESTMERGESORT
-//#define TESTQUICKSORT
+#define TESTMERGESORT
+#define TESTQUICKSORT
+
 
 // TESTFINDNTH is Thinking Problem
-//#define TESTFINDNTH
+#define TESTFINDNTH
 
 #ifdef TESTHEAP
 #include "Heap.hpp"
@@ -124,8 +125,9 @@ int main()
         cout << heapArray[i] << " ";
     cout << endl;
 
+    recSorts rSort;
     // now sort it
-    heapSort(heapArray, NUM_VALUES);
+    rSort.heapSort(heapArray, NUM_VALUES);
 
     // show updated array, should be in ascending order
     cout << "Now the array should be sorted" << endl;
@@ -134,6 +136,7 @@ int main()
     for (int i = 0; i < NUM_VALUES; i++)
         cout << heapArray[i] << " ";
     cout << endl;
+    cout << rSort.printAll() << endl;
 
     cout << endl << "Done with testing heap sort" << endl << endl;
 
@@ -141,6 +144,9 @@ int main()
 
 #ifdef TESTMERGESORT
     int mergeArray[NUM_VALUES] = { 41, 2, 3, 5, 13, 17, 43, 23, 29, 7, 11, 19, 31, 37, 47, -1, 0 };
+    rSorts mSort;
+    //int mergeArray[3] = { 41, 2, 3, 5, 13, 17, 43, 23, 29, 7, 11, 19, 31, 37, 47, -1, 0};
+
 
     // show starting array
     cout << "Starting array is " << endl;
@@ -149,7 +155,7 @@ int main()
     cout << endl;
 
     // now sort it
-    mergeSort(mergeArray, NUM_VALUES);
+    mSort.mergeSort(mergeArray, NUM_VALUES);
 
     // show updated array, should be in ascending order
     cout << "Now the array should be sorted" << endl;
@@ -165,6 +171,7 @@ int main()
 
 #ifdef TESTQUICKSORT
     int quickArray[NUM_VALUES] = { 41, 2, 3, 5, 13, 17, 43, 23, 29, 7, 11, 19, 31, 37, 47, -1, 0 };
+    rSorts qSort;
 
     // show starting array
     cout << "Starting array is " << endl;
@@ -173,7 +180,7 @@ int main()
     cout << endl;
 
     // now sort it
-    quickSort(quickArray, NUM_VALUES);
+    qSort.quickSort(quickArray, NUM_VALUES);
 
     // show updated array, should be in ascending order
     cout << "Now the array should be sorted" << endl;
@@ -195,11 +202,13 @@ int main()
     for (int i = 0; i < NUM_VALUES; i++)
         cout << findArray[i] << " ";
     cout << endl;
+    rSorts fSort;
+    
 
     // now find the value
     cout << "Finding 7th value, should be 13 " << endl;
     cout << " actually is: ";
-    cout << findNth(findArray, NUM_VALUES, 7) << endl;
+    cout << fSort.findNth(findArray, NUM_VALUES, 7) << endl;
 
 
     // show updated array, should be in partially sorted order

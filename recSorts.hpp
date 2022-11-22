@@ -4,15 +4,31 @@
 class recSorts
 {
 private:
-	Heap * mHeap;
-
+	Heap* mHeap = nullptr;
 public:
 	recSorts();
 	recSorts(int);
-	void heapSort(int* hArray, int);
-	void mergeSort(int* hArray, int);
-	void quickSort(int* hArray, int);
-	void findNth(int* hArray, int);
+	std::string printAll();
+	void heapSort(int*, int);
+};
+
+class rSorts
+{
+private:
+
+public:
+	rSorts();
+	~rSorts();
+
+	void mergeSort(int*, int);
+	void sort(int*, int);
+	void startMSort(int );
+	void swap(int* a, int* b);
+	int partition(int* mArray, int left, int right);
+	void recQuickSort(int* mArray, int left, int right);
+	void displayArray(int* mArray, int size);
+	void quickSort(int*, int);
+	int findNth(int*, int, int);
 
 };
 
